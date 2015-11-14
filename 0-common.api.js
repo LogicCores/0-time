@@ -14,8 +14,8 @@ exports.forLib = function (LIB) {
         
             var state = LIB._.extend({
             }, defaults || {});
-    
-    
+
+            self.config = defaults;
         }
         Context.prototype = Object.create(LIB.EventEmitter.prototype);
         Context.prototype.contexts = contexts;
