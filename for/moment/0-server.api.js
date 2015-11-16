@@ -1,10 +1,17 @@
 
-function displayServerLocalTime (moment) {
+function displayServerLocalTime (moment, zone) {
     if (displayServerLocalTime._didDisplay) {
         return;
     }
     displayServerLocalTime._didDisplay = true;
-    console.log("Server local time:", moment().format("dddd, MMMM Do YYYY, h:mm:ss a Z"));
+    console.log("Server time info:", JSON.stringify({
+        "ENV:TZ": process.env.TZ || "",
+        "Date:timezoneOffset": new Date().getTimezoneOffset(),
+        "Date": "" + new Date(),
+        "Date:localeTimeString": new Date().toLocaleTimeString(),
+        "moment:zone": zone,
+        "moment": moment().format("dddd, MMMM Do YYYY, h:mm:ss a Z")
+    }, null, 4));
 }
 
 exports.forLib = function (LIB) {
@@ -39,8 +46,8 @@ exports.forLib = function (LIB) {
     			return MOMENT_TZ.tz(context.config.zone);
     		}
         }
-        
-        displayServerLocalTime(moment);
+
+        displayServerLocalTime(moment, context.config.zone || "");
 
         return {
             moment: moment
