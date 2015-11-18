@@ -50,6 +50,7 @@ exports.forLib = function (LIB) {
         displayServerLocalTime(moment, context.config.zone || "");
 
         return {
+            zonelessMoment: MOMENT,
             moment: moment
         }
     }
